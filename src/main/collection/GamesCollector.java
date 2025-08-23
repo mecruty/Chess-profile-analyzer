@@ -20,11 +20,15 @@ public class GamesCollector {
         JSONObject json = new JSONObject();
         json.put("games", new JSONArray());
         JSONArray games = json.getJSONArray("games");
+        int gameCounter = 0;
+        int monthCounter = 0;
         
         // Collect all data from months
         for (Object month : months) {
             String url = (String) month;
             JSONArray gamesMonth = new APIReader(url).read().getJSONArray("games");
+            gameCounter += gamesMonth.length();
+            monthCounter++;
 
             // Removes pgn and adds to json
             for (Object game : gamesMonth) {
@@ -32,7 +36,11 @@ public class GamesCollector {
                 gameJson.remove("pgn");
                 games.put(gameJson);
             }
+
+            System.out.print("Loaded: " + gameCounter + " games.");
+            System.out.println(" (" + monthCounter + "/" + months.length() + " months)");
         }
+
 
         return json;
     }
