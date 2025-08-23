@@ -1,7 +1,8 @@
-import main.collection.APIReader;
+import main.collection.GamesCollector;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        new APIReader("https://api.chess.com/pub/player/beebeebeeboy/games/archives");
+        GamesCollector gc = new GamesCollector("mecruty");
+        System.out.println(gc.collectAll().toString());
     }
 }
