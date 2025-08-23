@@ -7,7 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Would you like to collect data?");
-        if (sc.nextLine() == "y") {
+        if (sc.nextLine().equals("y")) {
+            System.out.println("Enter username:");
             GamesCollector gc = new GamesCollector(sc.nextLine());
             gc.toCSV(gc.collectAll());
             System.out.println("Done");
