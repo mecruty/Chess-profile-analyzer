@@ -1,1 +1,5 @@
+# Created data
 data/
+
+# Class files
+*.class
