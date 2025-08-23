@@ -25,13 +25,14 @@ public class ConsoleApp {
 
         System.out.println("Would you like to collect data?");
         if (sc.nextLine().equals("y")) {
-            csvp.toCSV(gc.collectAll());
+            csvp.saveJSONToCSV(gc.collectAll());
             System.out.println("Done");
         }
 
         System.out.println("Would you like to load data?");
         if (sc.nextLine().equals("y")) {
             List<List<String>> csv = csvp.loadCSV();
+
         }
     }
 }

@@ -23,7 +23,7 @@ public class CSVParser {
         destination = "./data/" + username + ".csv";
     }
 
-    public void toCSV(JSONObject json) {
+    public void saveJSONToCSV(JSONObject json) {
         JSONArray docs = json.getJSONArray("games");
 
         File file = new File(destination);
