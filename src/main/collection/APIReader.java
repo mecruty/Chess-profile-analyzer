@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.json.JSONObject;
 
 public class APIReader {
-    URL url;
+    private URL url;
 
     public APIReader(String dest) {
         try {
