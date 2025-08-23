@@ -39,7 +39,23 @@ public class GamesCollector {
             for (Object game : gamesMonth) {
                 JSONObject gameJson = (JSONObject) game;
                 gameJson.remove("pgn");
-                gameJson.remove("tcn")
+                gameJson.remove("tcn");
+                gameJson.remove("fen");
+                gameJson.remove("uuid");
+
+                // Separates the white and black JSONObjects to individual tabs
+                JSONObject white = gameJson.getJSONObject("white");
+                JSONObject black = gameJson.getJSONObject("black");
+                gameJson.remove("white");
+                gameJson.remove("black");
+                if (white.getString("username").equals(username)) {
+                    addResultJSON(gameJson, white, black);
+                    gameJson.put("colour", "white");
+                } else {
+                    addResultJSON(gameJson, black, white);
+                    gameJson.put("colour", "black");
+                }
+
                 games.put(gameJson);
             }
 
@@ -48,6 +64,14 @@ public class GamesCollector {
         }
 
         return json;
+    }
+
+    private void addResultJSON(JSONObject gameJson, JSONObject own, JSONObject opp) {
+        gameJson.put("result", own.getString("result"));
+        gameJson.put("opponent_result", opp.getString("result"));
+        gameJson.put("rating", own.getInt("rating"));
+        gameJson.put("opponent_rating", opp.getInt("rating"));
+        gameJson.put("opponent_username", opp.getString("username"));
     }
 
     public void toCSV(JSONObject json) {
