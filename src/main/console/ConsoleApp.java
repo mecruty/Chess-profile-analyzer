@@ -1,8 +1,5 @@
 package main.console;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Map;
 import java.util.Scanner;
 
 import main.analyzer.GameAnalyzer;
@@ -36,16 +33,8 @@ public class ConsoleApp {
         System.out.println("Would you like to load data?");
         if (sc.nextLine().equals("y")) {
             // TODO temporary
-            ga = new GameAnalyzer(csvp.loadCSV());
-            Map<String, Map<String, Integer>> map = ga.analyzeAll();
-
-            try {
-                PrintWriter writer = new PrintWriter("./data/test.txt");
-                writer.print(map);
-                writer.close();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException("Writing to csv failed");
-            }
+            ga = new GameAnalyzer(username, csvp.loadCSV());
+            ga.analyzeAll();
         }
     }
 }

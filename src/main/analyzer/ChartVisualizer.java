@@ -1,16 +1,47 @@
 package main.analyzer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
 // Class for creating different kinds of charts
 public class ChartVisualizer {
-    public ChartVisualizer() {}
+    private String username;
 
-    public void createPieChart(Map<String, Integer> values) {
-        DefaultPieDataset<String> data = new DefaultPieDataset<>();
+    public ChartVisualizer(String username) {
+        this.username = username;
+    }
+
+    public void displayChart(JFreeChart chart) {
+        ChartPanel chartPanel = new ChartPanel(chart);
+        JFrame frame = new JFrame("Chart Displayer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(chartPanel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void saveChart(String name, JFreeChart chart) {
+        try {
+            File dest = new File("./data/" + username + "-" + name);
+            ChartUtils.saveChartAsPNG(dest, chart, 640, 480);
+        } catch (IOException e) {
+            throw new RuntimeException("Saving chart failed");
+        }
+    }
+
+    public JFreeChart createPieChart(String title, Map<String, Integer> values) {
+        DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
 
         // Find total sum of values to calculate percentage
         double total = 0;
@@ -19,7 +50,22 @@ public class ChartVisualizer {
         }
 
         for (Entry<String, Integer> value : values.entrySet()) {
-            data.setValue(value.getKey(), value.getValue() / total);
+            dataset.setValue(value.getKey(), value.getValue() / total);
         }
+
+        // Creating the chart
+        JFreeChart chart = ChartFactory.createPieChart(
+                title,
+                dataset,
+                true,
+                true,
+                false
+        );
+
+        // // Removes the labels (look weird) 
+        // PiePlot plot = (PiePlot) chart.getPlot();
+        // plot.setLabelGenerator(null);
+
+        return chart;
     }
 }
