@@ -13,7 +13,7 @@ public class GameAnalyzer {
     public GameAnalyzer(String username, List<List<String>> csv) {
         this.csv = csv;
         this.username = username;
-        vis = new ChartVisualizer(username);
+        vis = new ChartVisualizer(this.username);
     }
 
     public Map<String, Map<String, Integer>> analyzeAll() {
@@ -28,7 +28,10 @@ public class GameAnalyzer {
     }
 
     private void createAllCharts(Map<String, Map<String, Integer>> result) {
-        JFreeChart chart = vis.createPieChart("rules", result.get("rulesFrequency"));
-        vis.saveChart("rules", chart);
+        for (String key : result.keySet()) {
+            JFreeChart chart = vis.createPieChart(key, result.get(key));
+            vis.saveChart(key, chart);
+            vis.displayChart(chart);
+        }
     }
 }
