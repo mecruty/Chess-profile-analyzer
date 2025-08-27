@@ -1,13 +1,7 @@
 package main.console;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Scanner;
-
-import org.json.CDL;
-import org.json.JSONObject;
 
 import main.analyzer.GameAnalyzer;
 import main.collection.CSVParser;
