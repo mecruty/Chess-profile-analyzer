@@ -1,16 +1,17 @@
 package main.analyzer;
 
 import java.util.List;
+import java.util.Map;
 
 public class GameAnalyzer {
-    List<List<String>> csv;
+    private List<List<String>> csv;
 
     public GameAnalyzer(List<List<String>> csv) {
         this.csv = csv;
     }
 
-    public void analyzeAll() {
+    public Map<String, Map<String, Integer>> analyzeAll() {
         SimpleFrequencyAnalyzer sfa = new SimpleFrequencyAnalyzer(csv);
-        sfa.analyzeAll();
+        return sfa.analyzeAll();
     }
 }

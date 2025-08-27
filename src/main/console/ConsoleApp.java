@@ -1,8 +1,10 @@
 package main.console;
 
-import java.util.List;
 import java.util.Scanner;
 
+import org.json.JSONObject;
+
+import main.analyzer.GameAnalyzer;
 import main.collection.CSVParser;
 import main.collection.GamesCollector;
 
@@ -10,6 +12,7 @@ public class ConsoleApp {
     private String username;
     private GamesCollector gc;
     private CSVParser csvp;
+    private GameAnalyzer ga;
     
     static Scanner sc = new Scanner(System.in);
 
@@ -31,8 +34,10 @@ public class ConsoleApp {
 
         System.out.println("Would you like to load data?");
         if (sc.nextLine().equals("y")) {
-            List<List<String>> csv = csvp.loadCSV();
-
+            // TODO temporary
+            ga = new GameAnalyzer(csvp.loadCSV());
+            csvp = new CSVParser("test save data");
+            csvp.saveJSONToCSV(new JSONObject(ga.analyzeAll()));;
         }
     }
 }
