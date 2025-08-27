@@ -1,7 +1,12 @@
 package main.console;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Scanner;
 
+import org.json.CDL;
 import org.json.JSONObject;
 
 import main.analyzer.GameAnalyzer;
@@ -13,7 +18,7 @@ public class ConsoleApp {
     private GamesCollector gc;
     private CSVParser csvp;
     private GameAnalyzer ga;
-    
+
     static Scanner sc = new Scanner(System.in);
 
     public ConsoleApp() {
@@ -36,8 +41,8 @@ public class ConsoleApp {
         if (sc.nextLine().equals("y")) {
             // TODO temporary
             ga = new GameAnalyzer(csvp.loadCSV());
-            csvp = new CSVParser("test save data");
-            csvp.saveJSONToCSV(new JSONObject(ga.analyzeAll()));;
+            Map<String, Map<String, Integer>> map = ga.analyzeAll();
+            System.out.println(map);
         }
     }
 }

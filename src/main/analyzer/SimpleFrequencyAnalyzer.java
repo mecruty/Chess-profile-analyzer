@@ -28,33 +28,22 @@ public class SimpleFrequencyAnalyzer {
     }
 
     public Map<String, Integer> analyzeRules() {
-        // Collect values
-        int index = csv.get(0).indexOf("rules");
-        List<String> values = new ArrayList<>();
-        // Has to be index + 1 as 0 is the column names
-        csv.forEach((game) -> values.add(game.get(index + 1)));
-        
+        List<String> values = getColumn("rules");
+
         return countFrequency(values);
     }
 
     public Map<String, Integer> analyzeResult() {
-        // Collect values
-        int index = csv.get(0).indexOf("result");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
-        
+        List<String> values = getColumn("result");
+
         return countFrequency(values);
     }
 
     public Map<String, Integer> analyzeResultDetailed() {
-        // Collect values
-        int index = csv.get(0).indexOf("result");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
+        List<String> values = getColumn("result");
 
         // Values for the opponent
-        index = csv.get(0).indexOf("opponent_result");
-        List<String> opponentValues = csv.get(index + 1);
+        List<String> opponentValues = getColumn("opponent_result");
 
         // Adds the manner in which the opponent lost (opponent_result) if result is win
         for (int i = 0; i < values.size(); i++) {
@@ -69,17 +58,15 @@ public class SimpleFrequencyAnalyzer {
     }
 
     public Map<String, Integer> analyzeEco() {
-        // Collect values
-        int index = csv.get(0).indexOf("eco");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
+        List<String> values = getColumn("eco");
 
         // Removes the "https://www.chess.com/openings/" from each opening
         // Unless there was no opening
         int indexToRemove = "https://www.chess.com/openings/".length();
-        for (String value : values) {
+        for (int i = 0; i < values.size(); i++) {
+            String value = values.get(i);
             if (!value.equals("none")) {
-                value.substring(indexToRemove);
+                values.set(i, value.substring(indexToRemove));
             }
         }
         
@@ -87,33 +74,33 @@ public class SimpleFrequencyAnalyzer {
     }
 
     public Map<String, Integer> analyzeColour() {
-        // Collect values
-        int index = csv.get(0).indexOf("colour");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
+        List<String> values = getColumn("colour");
         
         return countFrequency(values);
     }
 
     public Map<String, Integer> analyzeTimeControl() {
-        // Collect values
-        int index = csv.get(0).indexOf("time_control");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
+        List<String> values = getColumn("time_control");
         
         return countFrequency(values);
     }
 
     public Map<String, Integer> analyzeTimeClass() {
-        // Collect values
-        int index = csv.get(0).indexOf("time_class");
-        // Has to be index + 1 as 0 is the column names
-        List<String> values = csv.get(index + 1);
+        List<String> values = getColumn("time_class");
         
         return countFrequency(values);
     }
 
-    
+    private List<String> getColumn(String name) {
+        // Collect values
+        int index = csv.get(0).indexOf(name);
+        List<String> values = new ArrayList<>();
+        csv.forEach((game) -> values.add(game.get(index)));
+
+        // Remove the first row (column names)
+        values.remove(0);
+        return values;
+    }
 
     private Map<String, Integer> countFrequency(List<String> values) {
         Map<String, Integer> analysis = new HashMap<String,Integer>();
