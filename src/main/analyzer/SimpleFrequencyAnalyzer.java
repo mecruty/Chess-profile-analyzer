@@ -106,7 +106,7 @@ public class SimpleFrequencyAnalyzer {
         Map<String, Integer> analysis = new HashMap<String,Integer>();
         for (String value : values) {
             analysis.putIfAbsent(value, 0);
-            analysis.compute(value, (k, v) -> v++);
+            analysis.compute(value, (k, v) -> v = v++);
         }
 
         return analysis;
