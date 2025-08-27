@@ -50,7 +50,7 @@ public class SimpleFrequencyAnalyzer {
             String value = values.get(i);
 
             if (value.equals("win")) {
-                value += "(" + opponentValues.get(i) + ")";
+                values.set(i, value + "(" + opponentValues.get(i) + ")");
             }
         }
         
