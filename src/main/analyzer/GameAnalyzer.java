@@ -1,5 +1,7 @@
 package main.analyzer;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,12 @@ public class GameAnalyzer {
         this.csv = csv;
         this.username = username;
         vis = new ChartVisualizer(this.username);
+
+        // Creates the directory for the general visualization
+        File dir = new File("./data/" + username + "/visualization");
+        if (dir != null && !dir.exists()) {
+            dir.mkdir();
+        }
     }
 
     public Map<String, Map<String, Integer>> analyzeAll() {

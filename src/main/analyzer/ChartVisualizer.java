@@ -33,7 +33,14 @@ public class ChartVisualizer {
 
     public void saveChart(String name, JFreeChart chart) {
         try {
-            File dest = new File("./data/" + username + "-" + name + ".png");
+            File dest = new File("./data/" + username + "/" + name + ".png");
+
+            // Creates all directories for data
+            File dir = dest.getParentFile();
+            if (dir != null && !dir.exists()) {
+                dir.mkdir();
+            }
+
             ChartUtils.saveChartAsPNG(dest, chart, 640, 480);
         } catch (IOException e) {
             throw new RuntimeException("Saving chart failed");
@@ -59,11 +66,10 @@ public class ChartVisualizer {
                 dataset,
                 true,
                 true,
-                false
-        );
+                false);
 
-        // // Removes the labels (look weird) 
-        //PiePlot plot = (PiePlot) chart.getPlot();
+        // // Removes the labels (look weird)
+        // PiePlot plot = (PiePlot) chart.getPlot();
         // plot.setLabelGenerator(null);
 
         return chart;
