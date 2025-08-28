@@ -20,13 +20,20 @@ public class CSVParser {
 
     public CSVParser(String username) {
         this.username = username;
-        destination = "./data/" + username + ".csv";
+        destination = "./data/" + username + "/" + username + ".csv";
     }
 
     public void saveJSONToCSV(JSONObject json) {
         JSONArray docs = json.getJSONArray("games");
 
         File file = new File(destination);
+
+        // Creates the parent directory if nonexistent (basically folder for the user)
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdir();
+        }
+
         String csv = CDL.toString(docs);
 
         try {
