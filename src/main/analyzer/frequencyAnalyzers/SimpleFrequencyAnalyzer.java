@@ -1,16 +1,13 @@
-package main.analyzer;
+package main.analyzer.frequencyAnalyzers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 // Essentially the things that could be measured with pie charts
-public class SimpleFrequencyAnalyzer {
-    private List<List<String>> csv;
-
+public class SimpleFrequencyAnalyzer extends FrequencyAnalyzer {
     public SimpleFrequencyAnalyzer(List<List<String>> csv) {
-        this.csv = csv;
+        super(csv);
     }
 
     public Map<String, Map<String, Integer>> analyzeAll() {
@@ -89,26 +86,5 @@ public class SimpleFrequencyAnalyzer {
         List<String> values = getColumn("time_class");
         
         return countFrequency(values);
-    }
-
-    private List<String> getColumn(String name) {
-        // Collect values
-        int index = csv.get(0).indexOf(name);
-        List<String> values = new ArrayList<>();
-        csv.forEach((game) -> values.add(game.get(index)));
-
-        // Remove the first row (column names)
-        values.remove(0);
-        return values;
-    }
-
-    private Map<String, Integer> countFrequency(List<String> values) {
-        Map<String, Integer> analysis = new HashMap<String,Integer>();
-        for (String value : values) {
-            analysis.putIfAbsent(value, 0);
-            analysis.compute(value, (k, v) -> v += 1);
-        }
-
-        return analysis;
     }
 }
