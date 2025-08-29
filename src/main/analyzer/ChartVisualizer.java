@@ -31,9 +31,10 @@ public class ChartVisualizer {
         frame.setVisible(true);
     }
 
-    public void saveChart(String name, JFreeChart chart) {
+    public void saveChart(String name, JFreeChart chart, String folder) {
         try {
-            File dest = new File("./data/" + username + "/visualization/" + name + ".png");
+            // Puts file in specific folder within visualization
+            File dest = new File("./data/" + username + "/visualization/" + folder + "/" + name + ".png");
 
             // Creates all directories for data
             File dir = dest.getParentFile();
