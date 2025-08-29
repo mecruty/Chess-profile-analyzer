@@ -7,7 +7,6 @@ import java.util.Map;
 import org.jfree.chart.JFreeChart;
 
 import main.analyzer.frequencyAnalyzers.ComplexFrequencyAnalyzer;
-import main.analyzer.frequencyAnalyzers.FrequencyAnalyzer;
 import main.analyzer.frequencyAnalyzers.SimpleFrequencyAnalyzer;
 
 public class GameAnalyzer {
@@ -29,32 +28,30 @@ public class GameAnalyzer {
 
     public void analyzeAll() {
         analyzeAllSimpleFrequency();
+        analyzeComplexFrequency("time_class", "bullet", "result");
 
         System.out.println("Data analyzed!");
     }
 
-    private void createFrequencyCharts(Map<String, Map<String, Integer>> result) {
+    private void createFrequencyCharts(Map<String, Map<String, Integer>> result, String folder) {
         for (String key : result.keySet()) {
             JFreeChart chart = vis.createPieChart(key, result.get(key));
-            vis.saveChart(key, chart);
+            vis.saveChart(key, chart, folder);
             vis.displayChart(chart);
         }
     }
 
     public void analyzeAllSimpleFrequency() {
         SimpleFrequencyAnalyzer sfa = new SimpleFrequencyAnalyzer(csv);
-
         Map<String, Map<String, Integer>> result = sfa.analyzeAll();
 
-        // Removing the functionality for opening as too complicated.
-        result.remove("eco");
-
-        // Creating all charts
-        createFrequencyCharts(result);
+        createFrequencyCharts(result, "simple frequency");
     }
 
-    public void analyzeComplexFrequency(String filter, String data) {
+    public void analyzeComplexFrequency(String filterKey, String filterValue, String dataKey) {
         ComplexFrequencyAnalyzer cfa = new ComplexFrequencyAnalyzer(csv);
-        cfa.analyze(filter, data);
+        Map<String, Map<String, Integer>> result = cfa.analyze(filterKey, filterValue, dataKey);
+
+        createFrequencyCharts(result, "complex frequency");
     }
 }

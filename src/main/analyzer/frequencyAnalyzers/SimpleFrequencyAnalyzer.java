@@ -16,7 +16,7 @@ public class SimpleFrequencyAnalyzer extends FrequencyAnalyzer {
         analysis.put("rulesFrequency", analyzeRules());
         analysis.put("resultFrequency", analyzeResult());
         analysis.put("resultDetailedFrequency", analyzeResultDetailed());
-        analysis.put("ecoFrequency", analyzeEco());
+        //analysis.put("ecoFrequency", analyzeEco());
         analysis.put("colourFrequency", analyzeColour());
         analysis.put("timeControlFrequency", analyzeTimeControl());
         analysis.put("timeClassFrequency", analyzeTimeClass());
@@ -62,6 +62,7 @@ public class SimpleFrequencyAnalyzer extends FrequencyAnalyzer {
         int indexToRemove = "https://www.chess.com/openings/".length();
         for (int i = 0; i < values.size(); i++) {
             String value = values.get(i);
+
             if (!value.equals("none")) {
                 values.set(i, value.substring(indexToRemove));
             }
