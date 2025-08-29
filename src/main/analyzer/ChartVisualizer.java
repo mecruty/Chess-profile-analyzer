@@ -33,7 +33,7 @@ public class ChartVisualizer {
 
     public void saveChart(String name, JFreeChart chart) {
         try {
-            File dest = new File("./data/" + username + "/" + name + ".png");
+            File dest = new File("./data/" + username + "/visualization/" + name + ".png");
 
             // Creates all directories for data
             File dir = dest.getParentFile();
