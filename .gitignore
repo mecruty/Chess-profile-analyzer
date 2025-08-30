@@ -5,3 +5,5 @@ data/*
 
 # Class files
 *.class
+
+.vscode/settings.json
